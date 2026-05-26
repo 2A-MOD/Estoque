@@ -1,7 +1,15 @@
+using Estoque.Interfaces;
+using Estoque.Repository;
+using EstoqueLoja.Repository;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// registrando injecao de dependencia
+builder.Services.AddScoped<IProdutoRepositorio, ProdutoRepositorio>();
+builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
 
 var app = builder.Build();
 

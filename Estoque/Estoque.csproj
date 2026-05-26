@@ -4,6 +4,11 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>6b5220f3-8305-4f09-8220-9df4519bf1bb</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MySql.Data" Version="9.7.0" />
+  </ItemGroup>
 
 </Project>
