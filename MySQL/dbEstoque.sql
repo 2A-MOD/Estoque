@@ -5,9 +5,9 @@ use Estoque;
 create table if not exists Produto (
     Id int auto_increment primary key,
     Nome varchar(100) not null,
-    Preco decimal(6, 2) not null,
+    Preco decimal(6, 2) not null, -- decimal evita erros de arredondamento do float e double, ideal para valores monetários
     Categoria varchar(50) default 'Geral',
-    DataCadastro datetime default current_timestamp
+    DataCadastro datetime default current_timestamp -- armazena data e hora completas; preenchido automaticamente no momento da inserção
 );
 
 create table if not exists Usuario (
