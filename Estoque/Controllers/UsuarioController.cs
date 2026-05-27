@@ -28,7 +28,7 @@ namespace Estoque.Controllers
         public async Task<IActionResult> Login(Usuario model)
         {
             // Verifica se o modelo de dados é válido (todos os campos obrigatórios foram preenchidos corretamente)
-            if (ModelState.IsValid) return View(model);
+            if (!ModelState.IsValid) return View(model);
             // Chama o método de validação do repositório de usuários para verificar se as credenciais são corretas
             var user = _userRepo.ValidarLogin(model.Email, model.Senha);
             // Se o usuário for encontrado e as credenciais forem válidas, cria uma lista de claims para armazenar informações do usuário

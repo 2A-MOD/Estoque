@@ -67,8 +67,9 @@ namespace Estoque.Controllers
         // Método para processar os dados enviados pelo formulário de edição de produto
         public IActionResult Editar(int id, Produto model)
         {
+            // Verifica se o ID do produto no modelo corresponde ao ID fornecido como parâmetro, caso contrário, retorna um resultado de "BadRequest" para indicar que a solicitação é inválida
             if (id != model.Id) return BadRequest();
-
+            
             if (ModelState.IsValid)
             {
                 var product = new Produto
@@ -83,12 +84,14 @@ namespace Estoque.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
+            
             return View(model);
         }
 
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
+        // Método para processar a exclusão de um produto específico
         public IActionResult Excluir(int id)
         {
             _productRepo.Excluir(id);
