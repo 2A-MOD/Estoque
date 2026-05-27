@@ -1,6 +1,7 @@
 ﻿using Estoque.Interfaces;
 using Estoque.Models;
 using EstoqueLoja.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Estoque.Controllers
@@ -39,6 +40,58 @@ namespace Estoque.Controllers
             // Chama o método do repositório para adicionar o novo produto à lista de produtos
             _productRepo.Adicionar(product);
             // Redireciona o usuário para a ação "Index" para exibir a lista atualizada de produtos
+            return RedirectToAction(nameof(Index));
+        }
+        [HttpGet]
+        // Método para exibir o formulário de edição de um produto específico
+        public IActionResult Editar(int id)
+        {
+            // Chama o método do repositório para buscar o produto pelo ID e armazena em uma variável
+            var product = _productRepo.BuscarPorId(id);
+            // Verifica se o produto existe, caso contrário, retorna um resultado de "NotFound" para indicar que o recurso não foi encontrado
+            if (product == null) return NotFound();
+
+            var viewModel = new Produto
+            {
+                Id = product.Id,
+                Nome = product.Nome,
+                Preco = product.Preco
+            };
+            // Retorna a view "Editar" passando o viewModel como modelo para preencher os campos do formulário de edição
+            return View(viewModel);
+        }
+
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        // Método para processar os dados enviados pelo formulário de edição de produto
+        public IActionResult Editar(int id, Produto model)
+        {
+            if (id != model.Id) return BadRequest();
+
+            if (ModelState.IsValid)
+            {
+                var product = new Produto
+                {
+                    Id = model.Id,
+                    Nome = model.Nome,
+                    Preco = model.Preco
+                };
+
+
+                _productRepo.Atualizar(product);
+
+                return RedirectToAction(nameof(Index));
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public IActionResult Excluir(int id)
+        {
+            _productRepo.Excluir(id);
             return RedirectToAction(nameof(Index));
         }
     }
