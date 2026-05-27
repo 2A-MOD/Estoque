@@ -4,6 +4,6 @@ namespace Estoque.Interfaces
 {
     public interface IUsuarioRepositorio
     {
-        Usuario? Validar(string email, string senha);
+        Usuario? ValidarLogin(string email, string senha);
     }
 }

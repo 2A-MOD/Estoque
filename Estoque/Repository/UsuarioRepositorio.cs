@@ -13,7 +13,7 @@ namespace Estoque.Repository
         {
             _connectionString = config.GetConnectionString("Conexao")!;
         }
-        public Usuario? Validar(string email, string senha)
+        public Usuario? ValidarLogin(string email, string senha)
         {
             // estabelece a conexao com o banco de dados
             using var conn = new MySqlConnection(_connectionString);
